@@ -21,4 +21,17 @@ class HomeController extends Controller
             'nama', 'daftar_hewan'
         ));
     }
+    
+    public function penggunaan_layout(){
+        return view('home.penggunaan_layout');
+    }
+
+    public function contoh(){
+        return view('home.contoh');
+    }
+    
+    public function contoh_post(Request $request){
+        $name = $request->get('nama');
+        return "Ini dari function contoh post dengan nama=".$name;
+    }
 }
