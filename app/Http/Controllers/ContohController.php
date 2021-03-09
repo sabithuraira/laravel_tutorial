@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pegawai;
 
 class ContohController extends Controller
 {
@@ -13,7 +14,6 @@ class ContohController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
