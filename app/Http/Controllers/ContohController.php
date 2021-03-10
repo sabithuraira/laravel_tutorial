@@ -14,6 +14,9 @@ class ContohController extends Controller
      */
     public function index()
     {
+        $data = Pegawai::all(); //SELECT * FROM pegawai 
+        $data_condition = Pegawai::where("nama", "=" , "Anton")->get(); //SELECT * FROM pegawai where nama='Anton'
+        return $data_condition;
     }
 
     /**
@@ -23,7 +26,16 @@ class ContohController extends Controller
      */
     public function create()
     {
-        //
+        //INSERT INTO pegawai (nama, tanggal_lahor,....) VALUES (....)
+        $model = new Pegawai;
+        $model->nama = "Anton";
+        $model->tanggal_lahir = "1990-08-18";
+        $model->gelar = "S.Kom";
+        $model->nip = "1232456789";
+        if($model->save())
+            return "Berhasil simpan data";
+        else
+            return "Gagal Menyimpan data";
     }
 
     /**
