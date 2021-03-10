@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContohController;
+use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PaginationController;
 
 /*
@@ -39,6 +40,14 @@ Route::post('/home/contoh', [HomeController::class, 'contoh_post']);
 // Route::get('/contoh/create', [ContohController::class, 'create']);
 // Route::post('/contoh/create', [ContohController::class, 'store']);
 Route::resource('contoh', ContohController::class);
+Route::resource('pegawai', PegawaiController::class);
+//Route get => pegawai => index
+//Route get => pegawai/create => create
+//Route post => pegawai => store
+//Route get => pegawai/{id} => show
+//Route put/patch => pegawai/{id} => update
+//Route delete => pegawai/{id} => delete
+//Route get => pegawai/{id}/edit => edit
 
 // Route::get('/pagination', [PaginationController::class, 'index']);
 // Route::get('/pagination/show_api', [PaginationController::class, 'show_api']);
