@@ -13,11 +13,18 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $datas = Pegawai::all();
+        $keyword = $request->keyword;
+        // $datas = Pegawai::all();
+        $datas = Pegawai::where('nama', 'LIKE', '%'.$keyword.'%')
+            ->orWhere('gelar', 'LIKE', '%'.$keyword.'%')
+            ->orWhere('nip', 'LIKE', '%'.$keyword.'%')
+            ->paginate();
+        $datas->withPath('pegawai');
+        $datas->appends($request->all());
         return view('pegawai.index', compact(
-            'datas'
+            'datas', 'keyword'
         ));
     }
 
@@ -49,7 +56,7 @@ class PegawaiController extends Controller
         $model->nip = $request->nip;
         $model->save();
 
-        return redirect('pegawai');
+        return redirect('pegawai')->with('success', "Data berhasil disimpan");
     }
 
     /**
@@ -93,7 +100,7 @@ class PegawaiController extends Controller
         $model->nip = $request->nip;
         $model->save();
 
-        return redirect('pegawai');
+        return redirect('pegawai')->with('success', "Data berhasil diperbaharui");
     }
 
     /**
