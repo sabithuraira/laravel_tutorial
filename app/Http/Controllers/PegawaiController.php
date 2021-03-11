@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
+use App\Http\Requests\PegawaiRequest;
 
 class PegawaiController extends Controller
 {
@@ -39,7 +40,7 @@ class PegawaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PegawaiRequest $request)
     {
         $model = new Pegawai;
         $model->nama = $request->nama;
@@ -83,7 +84,7 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PegawaiRequest $request, $id)
     {
         $model = Pegawai::find($id);
         $model->nama = $request->nama;
