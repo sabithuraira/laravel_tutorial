@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Http\Requests\PegawaiRequest;
+use Illuminate\Support\Facades\File;
 
 class PegawaiController extends Controller
 {
@@ -54,6 +55,14 @@ class PegawaiController extends Controller
         $model->tanggal_lahir = $request->tanggal_lahir;
         $model->gelar = $request->gelar;
         $model->nip = $request->nip;
+        // $model->foto_profile = $request->foto_profile;
+        //kita akan membuat code untuk upload file
+        if($request->file('foto_profile')){
+            $file = $request->file('foto_profile');
+            $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('foto', $nama_file);
+            $model->foto_profile = $nama_file;
+        }
         $model->save();
 
         return redirect('pegawai')->with('success', "Data berhasil disimpan");
@@ -98,6 +107,16 @@ class PegawaiController extends Controller
         $model->tanggal_lahir = $request->tanggal_lahir;
         $model->gelar = $request->gelar;
         $model->nip = $request->nip;
+        
+        if($request->file('foto_profile')){
+            $file = $request->file('foto_profile');
+            $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('foto', $nama_file);
+
+            File::delete('foto/'.$model->foto_profile);
+            $model->foto_profile = $nama_file;
+        }
+
         $model->save();
 
         return redirect('pegawai')->with('success', "Data berhasil diperbaharui");

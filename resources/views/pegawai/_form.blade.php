@@ -42,4 +42,19 @@
     </div>
 </div>
 
+
+<div class="row clearfix">
+    <div class="col-md-6">Foto Profile</div>
+    
+    <div class="col-md-6">
+        <input class="form-control"  type="file" name="foto_profile">
+        @foreach($errors->get('foto_profile') as $msg)
+            <p class="text-danger">{{ $msg }}</p>
+        @endforeach
+        @if(strlen($model->foto_profile)>0)
+            <img src="{{ asset('foto/'.$model->foto_profile) }}">
+        @endif
+    </div>
+</div>
+
 <button type="submit" class="btn btn-primary">SIMPAN</button>

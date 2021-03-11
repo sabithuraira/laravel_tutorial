@@ -16,6 +16,7 @@
     <br/>
     <table class="table-bordered table">
         <tr class="text-center">
+            <th>Foto Profile</th>
             <th>Nama</th>
             <th>Tanggal Lahir</th>
             <th>Gelar</th>
@@ -24,6 +25,11 @@
         </tr>
         @foreach($datas as $key=>$value)
             <tr>
+                <td>
+                    @if(strlen($value->foto_profile)>0)
+                        <img src="{{ asset('foto/'.$value->foto_profile) }}" />
+                    @endif
+                </td>
                 <td>{{ $value->nama }}</td>
                 <td>{{ $value->tanggal_lahir }}</td>
                 <td>{{ $value->gelar }}</td>
