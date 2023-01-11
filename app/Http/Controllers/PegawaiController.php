@@ -85,7 +85,7 @@ class PegawaiController extends Controller
     public function edit($id){
         $model = Pegawai::find($id);
         $riwayat_pendidikan = RiwayatPendidikan::where('pegawai_id', $id)->get();
-        
+
         return view('pegawai.edit', compact(
             'model', 'riwayat_pendidikan'
         ));
@@ -120,21 +120,6 @@ class PegawaiController extends Controller
         return redirect('pegawai')->with('success', "Data berhasil diperbaharui");
     }
 
-    public function store_riwayat(Request $request, $id){
-        $model = new RiwayatPendidikan;
-
-        if(strlen($request->riwayat_id)>0){
-            $model = RiwayatPendidikan::find($request->riwayat_id);
-        }
-
-        $model->pegawai_id = $id;
-        $model->nama_pendidikan = $request->nama_pendidikan;
-        $model->periode_pendidikan = $request->periode_pendidikan;
-        $model->save();
-
-        return redirect('pegawai/'.$id.'/edit')->with('success', "Data berhasil diperbaharui");
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -145,6 +130,23 @@ class PegawaiController extends Controller
         $model = Pegawai::find($id);
         $model->delete();
         return redirect('pegawai');
+    }
+
+
+    public function store_riwayat(Request $request, $id){
+        $model = new RiwayatPendidikan;
+
+        if(strlen($request->riwayat_id)>0){
+            $model = RiwayatPendidikan::find($request->riwayat_id);
+        }
+        
+        $model->pegawai_id = $id;
+        $model->nama_pendidikan = $request->nama_pendidikan;
+        $model->periode_pendidikan = $request->periode_pendidikan;
+
+        $model->save();
+
+        return redirect('pegawai/'.$id.'/edit')->with('success', "Data berhasil diperbaharui");
     }
 
     public function destroy_riwayat($id, $pegawai_id){

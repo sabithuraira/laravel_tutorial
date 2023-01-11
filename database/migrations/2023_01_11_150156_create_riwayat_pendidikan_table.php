@@ -20,7 +20,6 @@ class CreateRiwayatPendidikanTable extends Migration
             $table->string("nama_pendidikan");
             $table->string("periode_pendidikan");
 
-            
             $table->timestamps();
         });
     }
