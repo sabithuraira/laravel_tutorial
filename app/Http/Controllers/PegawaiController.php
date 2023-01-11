@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
+use App\Models\RiwayatPendidikan;
 use App\Http\Requests\PegawaiRequest;
 use Illuminate\Support\Facades\File;
 
@@ -14,8 +15,7 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         $keyword = $request->keyword;
         // $datas = Pegawai::all();
         $datas = Pegawai::where('nama', 'LIKE', '%'.$keyword.'%')
@@ -34,8 +34,7 @@ class PegawaiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $model = new Pegawai;
         return view('pegawai.create', compact(
             'model'
@@ -48,8 +47,7 @@ class PegawaiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PegawaiRequest $request)
-    {
+    public function store(PegawaiRequest $request){
         $model = new Pegawai;
         $model->nama = $request->nama;
         $model->tanggal_lahir = $request->tanggal_lahir;
@@ -74,8 +72,7 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id){
         //
     }
 
@@ -85,11 +82,12 @@ class PegawaiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $model = Pegawai::find($id);
+        $riwayat_pendidikan = RiwayatPendidikan::where('pegawai_id', $id)->get();
+        
         return view('pegawai.edit', compact(
-            'model'
+            'model', 'riwayat_pendidikan'
         ));
     }
 
@@ -122,16 +120,36 @@ class PegawaiController extends Controller
         return redirect('pegawai')->with('success', "Data berhasil diperbaharui");
     }
 
+    public function store_riwayat(Request $request, $id){
+        $model = new RiwayatPendidikan;
+
+        if(strlen($request->riwayat_id)>0){
+            $model = RiwayatPendidikan::find($request->riwayat_id);
+        }
+
+        $model->pegawai_id = $id;
+        $model->nama_pendidikan = $request->nama_pendidikan;
+        $model->periode_pendidikan = $request->periode_pendidikan;
+        $model->save();
+
+        return redirect('pegawai/'.$id.'/edit')->with('success', "Data berhasil diperbaharui");
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $model = Pegawai::find($id);
         $model->delete();
         return redirect('pegawai');
+    }
+
+    public function destroy_riwayat($id, $pegawai_id){
+        $model = RiwayatPendidikan::find($id);
+        $model->delete();
+        return redirect('pegawai/'.$pegawai_id.'/edit');
     }
 }

@@ -41,6 +41,8 @@ Route::post('/home/contoh', [HomeController::class, 'contoh_post']);
 // Route::post('/contoh/create', [ContohController::class, 'store']);
 Route::resource('contoh', ContohController::class);
 Route::resource('pegawai', PegawaiController::class);
+Route::post('/pegawai/{id}/riwayat', [PegawaiController::class, 'store_riwayat']);
+Route::delete('/pegawai/{id}/{pegawai_id}/riwayat', [PegawaiController::class, 'destroy_riwayat']);
 //Route get => pegawai => index
 //Route get => pegawai/create => create
 //Route post => pegawai => store

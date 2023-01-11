@@ -8,4 +8,6 @@
 
         @include('pegawai._form')
     </form>
+
+    @include('pegawai._form_riwayat')
 @endsection
